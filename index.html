@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Responsive Sidebar Menu</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #ccc;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #fff;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.sidebar .submenu {
+  display: none;
+  padding-left: 20px;
+}
+
+.sidebar .submenu a {
+  font-size: 16px;
+}
+
+.sidebar .submenu.active {
+  display: block;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.main-content {
+  transition: margin-left 0.5s;
+  padding: 16px;
+  margin-left: 0;
+}
+
+.menu-btn {
+  cursor: pointer;
+  font-size: 20px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+  color: #ccc;
+}
+
+.menu-btn:hover {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+  
+  .menu-btn {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 150px;
+  }
+  
+  .menu-btn {
+    font-size: 16px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar" id="sidebar">
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <div class="submenu">
+    <a href="#">Services</a>
+    <a href="#">Products</a>
+  </div>
+  <a href="#">Contact</a>
+  <span class="close-btn" onclick="closeNav()">×</span>
+</div>
+
+<div class="main-content" id="main-content">
+  <button class="menu-btn" onclick="openNav()">☰</button>
+  <h2>Main Content</h2>
+  <p>This is the main content area. You can put your content here.</p>
+</div>
+
+<script>
+function openNav() {
+  document.getElementById("sidebar").classList.add('open');
+  document.getElementById("main-content").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("sidebar").classList.remove('open');
+  document.getElementById("main-content").style.marginLeft= "0";
+}
+
+document.querySelectorAll('.sidebar a').forEach(item => {
+  item.addEventListener('click', event => {
+    const submenu = item.nextElementSibling;
+    if (submenu && submenu.classList.contains('submenu')) {
+      event.preventDefault();
+      submenu.classList.toggle('active');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
